@@ -1,0 +1,16 @@
+/.cargo/
+/target
+
+.idea
+*.iml
+
+.criterion
+perf.data*
+/tmp
+
+{{#if application }}
+# Cargo.lock should be committed for applications
+{{else}}
+# Ignore Cargo.lock for library
+Cargo.lock
+{{/if}}

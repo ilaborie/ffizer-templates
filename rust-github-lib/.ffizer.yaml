@@ -1,0 +1,26 @@
+# Based on https://github.com/jonhoo/rust-ci-conf
+variables: 
+  - name: application
+    default_value: false
+    hidden: true
+
+  - name: sort_dependencies
+    ask: What is the kind of Rust project
+    default_value: true
+    select_in_values:
+      - label: Yes
+        value: true
+      - label: No
+        value: false
+
+  - name: msrv
+    ask: Minimum Supported Rust Version?
+    default_value: "1.60.0"
+
+ignores:
+  - .git
+
+scripts:
+  - message: "This template is based on <https://github.com/jonhoo/rust-ci-conf> configuration"
+  - message: "See <https://app.codecov.io/gh> to configure the code coverage for your project"
+      

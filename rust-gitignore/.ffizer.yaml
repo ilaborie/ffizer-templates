@@ -1,0 +1,11 @@
+variables:
+  - name: application
+    ask: What is the kind of Rust project
+    select_in_values:
+      - label: Application
+        value: true
+      - label: Library
+        value: false
+
+ignores:
+  - .git

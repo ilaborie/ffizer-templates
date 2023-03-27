@@ -1,0 +1,13 @@
+# Based on https://github.com/jonhoo/rust-ci-conf
+variables:
+  - name: application
+    default_value: true
+    hidden: true
+
+ignores:
+  - .git
+
+imports:
+  - uri: "{{ ffizer_src_uri }}"
+    rev: "{{ ffizer_src_rev }}"
+    subfolder: "rust-github-lib"

@@ -1,15 +1,19 @@
 set dotenv-load
 
-# List all just receipes
+# List all just recipes
 default:
     @just --list
 
 # Install require tools
 requirements:
     rustup toolchain add nightly
-    cargo install cargo-watch cargo-audit cargo-deny
+    cargo install cargo-binstall
+    cargo binstall cargo-watch cargo-audit cargo-deny cargo-msrv cargo-semver-checks cargo-llvm-cov
+    {{#if sort_dependencies}}
+    cargo binstall cargo-sort
+    {{/if}}
     {{#if nextest }}
-    cargo install cargo-nextest
+    cargo binstall cargo-nextest
     {{/if}}
 
 # Run TDD mode
@@ -33,7 +37,9 @@ test:
 # Format the code
 format:
     cargo +nightly fmt
+    {{#if sort_dependencies}}
     cargo sort --workspace --grouped
+    {{/if}}
 
 # Format the code
 lint:
@@ -45,7 +51,9 @@ lint:
 check:
     @echo "🦀 Check formatting..."
     cargo +nightly fmt --all -- --check
+    {{#if sort_dependencies}}
     cargo sort --workspace --grouped --check
+    {{/if}}
     @just lint
     @just test
 
@@ -56,6 +64,19 @@ audit:
 
     @echo "🪪 Check licences..."
     cargo deny check
+
+# Detect the msrv
+msrv:
+    cargo msrv list
+    cargo msrv
+
+# Check the MSRV
+check-msrv:
+    cargo msrv verify
+
+# Check semver
+semver:
+    cargo semver-checks check-release
 
 # Build in production mode
 build:
@@ -68,3 +89,11 @@ doc:
 # Install to the cargo bin path
 install:
     cargo install --path .
+
+# Update with template
+dev-template:
+    {{#if application}}
+    ffizer apply --source {{ ffizer_src_uri }} --rev {{ ffizer_src_rev }} --source-subfolder rust-app --destination .
+    {{else}}
+    ffizer apply --source {{ ffizer_src_uri }} --rev {{ ffizer_src_rev }} --source-subfolder rust-lib --destination .
+    {{/if}}

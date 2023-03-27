@@ -1,0 +1,33 @@
+variables:
+
+  - name: project_name
+    ask: What is the project name
+    default_value: "{{ file_name ffizer_dst_folder }}"
+
+  - name: author_name
+    ask: What is your name
+    default_value: "Igor Laborie <ilaborie@gmail.com>"
+
+  - name: github_user
+    ask: What is your github user name
+    default_value: "ilaborie"
+
+  - name: application
+    default_value: false
+    hidden: true
+
+imports:
+  - uri: "{{ ffizer_src_uri }}"
+    rev: "{{ ffizer_src_rev }}"
+    subfolder: "rust-gitignore"
+  - uri: "{{ ffizer_src_uri }}"
+    rev: "{{ ffizer_src_rev }}"
+    subfolder: "rust-github-lib"
+  - uri: "{{ ffizer_src_uri }}"
+    rev: "{{ ffizer_src_rev }}"
+    subfolder: "rust-justfile"
+
+
+scripts:
+  - message: "Installing tests dependencies"
+    cmd: "cargo add --dev assert2 rstest proptest"
