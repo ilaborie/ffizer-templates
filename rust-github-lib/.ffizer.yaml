@@ -15,7 +15,7 @@ variables:
 
   - name: msrv
     ask: Minimum Supported Rust Version?
-    default_value: "1.60.0"
+    default_value: "1.64.0"
 
 ignores:
   - .git

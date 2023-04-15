@@ -31,5 +31,7 @@ ignores:
 scripts:
   - message: "Installing Just"
     cmd: "cargo install just"
+  - message: "Installing binstall"
+    cmd: "cargo install binstall"
   - message: "Installing just requirement"
     cmd: "just requirements"

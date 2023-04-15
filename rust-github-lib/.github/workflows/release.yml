@@ -1,0 +1,35 @@
+name: release
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  release:
+    if: github.repository_owner == 'ilaborie'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: taiki-e/create-gh-release-action@v1
+        with:
+          changelog: CHANGELOG.md
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # a-package-release:
+  #   if: github.repository_owner == 'ilaborie' && startsWith(github.ref_name, 'a-package-')
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: taiki-e/create-gh-release-action@v1
+  #       with:
+  #         prefix: a-package
+  #         changelog: a-package/CHANGELOG.md
+  #         branch: main
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

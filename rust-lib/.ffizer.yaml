@@ -16,6 +16,10 @@ variables:
     default_value: false
     hidden: true
 
+  - name: msrv
+    ask: Minimum Supported Rust Version?
+    default_value: "1.64.0"
+
 imports:
   - uri: "{{ ffizer_src_uri }}"
     rev: "{{ ffizer_src_rev }}"
